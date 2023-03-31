@@ -1,2 +1,2 @@
-# Cuy_App
+# Cuy App
 Cuy App Flutter Mobile
