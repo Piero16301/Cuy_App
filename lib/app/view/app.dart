@@ -1,5 +1,5 @@
-import 'package:cuy_app/counter/counter.dart';
 import 'package:cuy_app/l10n/l10n.dart';
+import 'package:cuy_app/login/login.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const CounterPage(),
+      home: const LoginPage(),
     );
   }
 }

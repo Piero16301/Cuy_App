@@ -1,0 +1,22 @@
+name: local_api_remote
+description: Local API Remote Connection
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=2.19.0 <3.0.0"
+
+dependencies:
+  device_info_plus: ^8.1.0
+  flutter:
+    sdk: flutter
+  local_api:
+    path: ../local_api
+  shared_preferences: ^2.0.18
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.3.0
+  test: ^1.19.2
+  very_good_analysis: ^4.0.0

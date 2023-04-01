@@ -8,12 +8,25 @@ environment:
 
 dependencies:
   bloc: ^8.1.1
+  equatable: ^2.0.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
+  local_api:
+    path: packages/local_api
+  local_api_remote:
+    path: packages/local_api_remote
+  local_repository:
+    path: packages/local_repository
+  user_api:
+    path: packages/user_api
+  user_api_remote:
+    path: packages/user_api_remote
+  user_repository:
+    path: packages/user_repository
 
 dev_dependencies:
   bloc_test: ^9.1.1
