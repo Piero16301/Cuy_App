@@ -72,7 +72,7 @@ class Plan extends Equatable {
   final String description;
 
   /// Cantidad
-  final int quantity;
+  final double quantity;
 
   /// Cantidad real
   final int quantityReal;

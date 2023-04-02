@@ -11,13 +11,13 @@ class LocalRepository {
 
   final ILocalApiRemote _apiRemote;
 
-  /// Retorna si está autenticado
-  bool getIsAuthenticated() {
-    return _apiRemote.getIsAuthenticated();
+  /// Retorna el token de OAuth del sistema
+  String? getSystemOAuthToken() {
+    return _apiRemote.getSystemOAuthToken();
   }
 
-  /// Establece si está autenticado
-  Future<void> setIsAuthenticated({required bool value}) async {
-    await _apiRemote.setIsAuthenticated(value: value);
+  /// Retorna el token de OAuth del usuario
+  String? getUserOAuthToken() {
+    return _apiRemote.getUserOAuthToken();
   }
 }

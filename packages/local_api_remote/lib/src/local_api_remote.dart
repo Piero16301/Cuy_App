@@ -13,12 +13,12 @@ class LocalApiRemote implements ILocalApiRemote {
   final SharedPreferences _preferences;
 
   @override
-  bool getIsAuthenticated() {
-    return _preferences.getBool('__is_authenticated__') ?? false;
+  String? getSystemOAuthToken() {
+    return _preferences.getString('__system_oauth_token__');
   }
 
   @override
-  Future<void> setIsAuthenticated({required bool value}) async {
-    await _preferences.setBool('__is_authenticated__', value);
+  String? getUserOAuthToken() {
+    return _preferences.getString('__user_oauth_token__');
   }
 }

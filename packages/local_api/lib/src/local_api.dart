@@ -2,9 +2,9 @@
 /// Local API Connection
 /// {@endtemplate}
 abstract class ILocalApiRemote {
-  /// Retorna si está autenticado
-  bool getIsAuthenticated();
+  /// Retorna el token de OAuth del sistema
+  String? getSystemOAuthToken();
 
-  /// Establece si está autenticado
-  Future<void> setIsAuthenticated({required bool value});
+  /// Retorna el token de OAuth del usuario
+  String? getUserOAuthToken();
 }

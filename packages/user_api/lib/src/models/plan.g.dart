@@ -12,7 +12,7 @@ Plan _$PlanFromJson(Map<String, dynamic> json) {
     bundleId: json['bundleId'] as String? ?? '',
     name: json['name'] as String? ?? '',
     description: json['description'] as String? ?? '',
-    quantity: json['quantity'] as int? ?? 0,
+    quantity: (json['quantity'] as num?)?.toDouble() ?? 0.0,
     quantityReal: json['quantityReal'] as int? ?? 0,
     price: (json['price'] as num?)?.toDouble() ?? 0.0,
     duration: json['duration'] as int? ?? 0,
