@@ -8,6 +8,9 @@ abstract class ILocalApiRemote {
   /// Retorna el token de OAuth del usuario
   String? getUserOAuthToken();
 
+  /// Eliminar el token de OAuth del usuario
+  Future<void> removeUserOAuthToken();
+
   /// Guarda detalles del usuario
   Future<void> saveUserDetails({
     required Map<String, dynamic> user,
@@ -15,4 +18,7 @@ abstract class ILocalApiRemote {
 
   /// Obtiene detalles del usuario
   Map<String, dynamic> getUserDetails();
+
+  /// Elimina detalles del usuario
+  Future<void> removeUserDetails();
 }

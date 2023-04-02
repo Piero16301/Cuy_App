@@ -25,6 +25,11 @@ class LocalApiRemote implements ILocalApiRemote {
   }
 
   @override
+  Future<void> removeUserOAuthToken() async {
+    await _preferences.remove('__user_oauth_token__');
+  }
+
+  @override
   Future<void> saveUserDetails({required Map<String, dynamic> user}) async {
     await _preferences.setString('__user_details__', jsonEncode(user));
   }
@@ -33,5 +38,10 @@ class LocalApiRemote implements ILocalApiRemote {
   Map<String, dynamic> getUserDetails() {
     return jsonDecode(_preferences.getString('__user_details__') ?? '{}')
         as Map<String, dynamic>;
+  }
+
+  @override
+  Future<void> removeUserDetails() async {
+    await _preferences.remove('__user_details__');
   }
 }

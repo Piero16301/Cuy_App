@@ -19,4 +19,17 @@ class UserCubit extends Cubit<UserState> {
       debugPrint(e.toString());
     }
   }
+
+  Future<void> logout() async {
+    emit(state.copyWith(status: UserStatus.loading));
+    try {
+      await _localRepository.removeUserOAuthToken();
+      await _localRepository.removeUserDetails();
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      emit(state.copyWith(backToPlans: true, status: UserStatus.success));
+    } catch (e) {
+      emit(state.copyWith(status: UserStatus.failure));
+      debugPrint(e.toString());
+    }
+  }
 }

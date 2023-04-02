@@ -21,6 +21,11 @@ class LocalRepository {
     return _apiRemote.getUserOAuthToken();
   }
 
+  /// Eliminar el token de OAuth del usuario
+  Future<void> removeUserOAuthToken() async {
+    await _apiRemote.removeUserOAuthToken();
+  }
+
   /// Guarda detalles del usuario
   Future<void> saveUserDetails({
     required Map<String, dynamic> user,
@@ -31,5 +36,10 @@ class LocalRepository {
   /// Obtiene detalles del usuario
   Map<String, dynamic> getUserDetails() {
     return _apiRemote.getUserDetails();
+  }
+
+  /// Elimina detalles del usuario
+  Future<void> removeUserDetails() async {
+    await _apiRemote.removeUserDetails();
   }
 }

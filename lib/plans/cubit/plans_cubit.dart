@@ -33,4 +33,12 @@ class PlansCubit extends Cubit<PlansState> {
       emit(state.copyWith(status: PlansStatus.failure));
     }
   }
+
+  void updateIsUserLoggedIn() {
+    final userOAuthToken = _localRepository.getUserOAuthToken();
+    final isUserLoggedIn = userOAuthToken != null;
+    if (isUserLoggedIn != state.isUserLoggedIn) {
+      emit(state.copyWith(isUserLoggedIn: userOAuthToken != null));
+    }
+  }
 }

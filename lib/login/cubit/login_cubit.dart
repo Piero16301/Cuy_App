@@ -49,6 +49,7 @@ class LoginCubit extends Cubit<LoginState> {
       await _localRepository.saveUserDetails(
         user: user.toJson(),
       );
+      await Future<void>.delayed(const Duration(milliseconds: 100));
       emit(state.copyWith(status: LoginStatus.success));
     } catch (e) {
       emit(state.copyWith(status: LoginStatus.failure));
