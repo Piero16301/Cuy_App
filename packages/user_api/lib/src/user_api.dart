@@ -14,6 +14,7 @@ abstract class IUserApiRemote {
   Future<User> authenticateUser({
     required String user,
     required String password,
+    required String systemOAuthToken,
   });
 
   /// Listar planes de usuario

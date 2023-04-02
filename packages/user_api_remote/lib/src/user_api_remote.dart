@@ -52,19 +52,18 @@ class UserApiRemote implements IUserApiRemote {
   Future<User> authenticateUser({
     required String user,
     required String password,
+    required String systemOAuthToken,
   }) async {
     try {
-      final systemOauthToken =
-          _preferences.getString('__system_oauth_token__') ?? '';
       final response = await _httpClient.post<Map<String, dynamic>>(
         '/api/v1/user/login',
         data: {
-          'email': user,
+          'emailOrPhone': user,
           'password': password,
         },
         options: Options(
           headers: <String, dynamic>{
-            'Authorization': 'Cuy-oauthtoken $systemOauthToken',
+            'Authorization': 'Cuy-oauthtoken $systemOAuthToken',
           },
         ),
       );

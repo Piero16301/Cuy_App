@@ -26,10 +26,12 @@ class UserRepository {
   Future<User> authenticateUser({
     required String user,
     required String password,
+    required String systemOAuthToken,
   }) async {
     return _userApiRemote.authenticateUser(
       user: user,
       password: password,
+      systemOAuthToken: systemOAuthToken,
     );
   }
 

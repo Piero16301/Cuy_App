@@ -1,6 +1,7 @@
 import 'package:cuy_app/login/login.dart';
 import 'package:cuy_app/plans/plans.dart';
 import 'package:cuy_app/system/system.dart';
+import 'package:cuy_app/user/user.dart';
 import 'package:go_router/go_router.dart';
 import 'package:local_repository/local_repository.dart';
 
@@ -19,6 +20,10 @@ GoRouter goRouter(LocalRepository localRepository) {
       GoRoute(
         path: '/login',
         builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: '/user',
+        builder: (context, state) => const UserPage(),
       ),
     ],
   );

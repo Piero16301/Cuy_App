@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:local_api/local_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,5 +22,16 @@ class LocalApiRemote implements ILocalApiRemote {
   @override
   String? getUserOAuthToken() {
     return _preferences.getString('__user_oauth_token__');
+  }
+
+  @override
+  Future<void> saveUserDetails({required Map<String, dynamic> user}) async {
+    await _preferences.setString('__user_details__', jsonEncode(user));
+  }
+
+  @override
+  Map<String, dynamic> getUserDetails() {
+    return jsonDecode(_preferences.getString('__user_details__') ?? '{}')
+        as Map<String, dynamic>;
   }
 }

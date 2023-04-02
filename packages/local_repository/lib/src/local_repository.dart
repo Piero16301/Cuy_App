@@ -20,4 +20,16 @@ class LocalRepository {
   String? getUserOAuthToken() {
     return _apiRemote.getUserOAuthToken();
   }
+
+  /// Guarda detalles del usuario
+  Future<void> saveUserDetails({
+    required Map<String, dynamic> user,
+  }) async {
+    await _apiRemote.saveUserDetails(user: user);
+  }
+
+  /// Obtiene detalles del usuario
+  Map<String, dynamic> getUserDetails() {
+    return _apiRemote.getUserDetails();
+  }
 }

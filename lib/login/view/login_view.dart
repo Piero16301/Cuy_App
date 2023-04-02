@@ -13,7 +13,7 @@ class LoginView extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state.status.isSuccess) {
-          context.go('/home');
+          context.go('/plans');
         } else if (state.status.isFailure) {
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(
