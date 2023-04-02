@@ -1,6 +1,7 @@
 import 'package:cuy_app/plans/plans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:user_api/user_api.dart';
 
 class PlansView extends StatelessWidget {
@@ -98,18 +99,41 @@ class PlansSuccess extends StatelessWidget {
         context.select<PlansCubit, List<Plan>>((cubit) => cubit.state.plans[0]);
     final plansFree =
         context.select<PlansCubit, List<Plan>>((cubit) => cubit.state.plans[1]);
+    final isUserLoggedIn = context.select<PlansCubit, bool>(
+      (cubit) => cubit.state.isUserLoggedIn,
+    );
 
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Planes',
+            style:
+                Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => isUserLoggedIn
+                  ? context.push('/user')
+                  : context.push('/login'),
+              child: Text(
+                isUserLoggedIn ? 'Mi cuenta' : 'Iniciar sesión',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Lista de planes',
                   style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.left,
                 ),
                 const SizedBox(height: 10),
                 if (plansList.isNotEmpty)
@@ -126,7 +150,7 @@ class PlansSuccess extends StatelessWidget {
                     },
                   )
                 else
-                  const Text('No hay planes'),
+                  const Center(child: Text('No hay planes')),
                 const SizedBox(height: 10),
                 Text(
                   'Lista de planes gratis',

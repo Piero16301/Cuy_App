@@ -26,26 +26,31 @@ class LoginView extends StatelessWidget {
         }
       },
       builder: (context, state) => Scaffold(
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Center(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Form(
-                  key: state.formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      ImageLogoLogin(),
-                      SizedBox(height: 30),
-                      UserFormLogin(),
-                      SizedBox(height: 20),
-                      PasswordFormLogin(),
-                      SizedBox(height: 30),
-                      ButtonLogin(),
-                    ],
-                  ),
+        appBar: AppBar(
+          title: Text(
+            'Inicio de sesión',
+            style:
+                Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22),
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Center(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Form(
+                key: state.formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    ImageLogoLogin(),
+                    SizedBox(height: 30),
+                    UserFormLogin(),
+                    SizedBox(height: 20),
+                    PasswordFormLogin(),
+                    SizedBox(height: 30),
+                    ButtonLogin(),
+                  ],
                 ),
               ),
             ),
