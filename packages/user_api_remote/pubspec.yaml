@@ -10,6 +10,7 @@ dependencies:
   dio: ^5.0.3
   flutter:
     sdk: flutter
+  shared_preferences: ^2.0.18
   user_api:
     path: ../user_api
 

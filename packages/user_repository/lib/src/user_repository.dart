@@ -11,12 +11,36 @@ class UserRepository {
 
   final IUserApiRemote _userApiRemote;
 
-  /// Login de usuario
-  Future<User> getUserFromDevice({
-    required String deviceId,
+  /// Autenticación de sistema
+  Future<void> authenticateSystem({
+    required String user,
+    required String password,
   }) async {
-    return _userApiRemote.getUserFromDevice(
-      deviceId: deviceId,
+    return _userApiRemote.authenticateSystem(
+      user: user,
+      password: password,
+    );
+  }
+
+  /// Autenticación de usuario
+  Future<User> authenticateUser({
+    required String user,
+    required String password,
+  }) async {
+    return _userApiRemote.authenticateUser(
+      user: user,
+      password: password,
+    );
+  }
+
+  /// Listar planes
+  Future<List<List<Plan>>> listPlans({
+    required String sort,
+    required bool isActive,
+  }) async {
+    return _userApiRemote.listPlans(
+      sort: sort,
+      isActive: isActive,
     );
   }
 }

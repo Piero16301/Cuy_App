@@ -4,8 +4,21 @@ import 'package:user_api/user_api.dart';
 /// User API Connection
 /// {@endtemplate}
 abstract class IUserApiRemote {
-  /// Obtiene el usuario vinculado al dispositivo
-  Future<User> getUserFromDevice({
-    required String deviceId,
+  /// Autenticación de sistema
+  Future<void> authenticateSystem({
+    required String user,
+    required String password,
+  });
+
+  /// Autenticación de usuario
+  Future<User> authenticateUser({
+    required String user,
+    required String password,
+  });
+
+  /// Listar planes de usuario
+  Future<List<List<Plan>>> listPlans({
+    required String sort,
+    required bool isActive,
   });
 }

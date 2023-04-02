@@ -13,6 +13,14 @@ class LoginCubit extends Cubit<LoginState> {
   final LocalRepository _localRepository;
   final UserRepository _userRepository;
 
+  void initGlobalKey() {
+    emit(state.copyWith(formKey: GlobalKey<FormState>()));
+  }
+
+  void restartStatus() {
+    emit(state.copyWith(status: LoginStatus.initial));
+  }
+
   void togglePasswordVisibility() {
     emit(state.copyWith(isPasswordVisible: !state.isPasswordVisible));
   }
@@ -26,9 +34,14 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<void> login() async {
+    if (!state.formKey!.currentState!.validate()) {
+      return;
+    }
+
     emit(state.copyWith(status: LoginStatus.loading));
     try {
       await Future<void>.delayed(const Duration(seconds: 2));
+      emit(state.copyWith(status: LoginStatus.success));
     } catch (e) {
       emit(state.copyWith(status: LoginStatus.failure));
     }
