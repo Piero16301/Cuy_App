@@ -1,3 +1,4 @@
+import 'package:cuy_app/l10n/l10n.dart';
 import 'package:cuy_app/system/system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,6 +37,8 @@ class SystemOAuthTokenLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -45,7 +48,7 @@ class SystemOAuthTokenLoading extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Autenticando con el sistema...',
+                  l10n.systemLoadingText,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 10),
@@ -64,6 +67,8 @@ class SystemOAuthTokenFailure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -73,14 +78,14 @@ class SystemOAuthTokenFailure extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Error al autenticar con el sistema',
+                  l10n.systemFailureText,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: context.read<SystemCubit>().getSystemOAuthToken,
                   child: Text(
-                    'Reintentar',
+                    l10n.systemRetryButton,
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!

@@ -73,6 +73,8 @@ class PlansLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -82,7 +84,7 @@ class PlansLoading extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Cargando planes...',
+                  l10n.plansLoadingText,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 10),
@@ -101,6 +103,8 @@ class PlansFailure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -110,14 +114,14 @@ class PlansFailure extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Error al cargar los planes',
+                  l10n.plansFailureText,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: context.read<PlansCubit>().getPlans,
                   child: Text(
-                    'Reintentar',
+                    l10n.plansRetryButton,
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
@@ -171,7 +175,9 @@ class PlansSuccess extends StatelessWidget {
             onPressed: () =>
                 isUserLoggedIn ? context.push('/user') : context.push('/login'),
             child: Text(
-              isUserLoggedIn ? 'Mi cuenta' : 'Iniciar sesión',
+              isUserLoggedIn
+                  ? l10n.plansMyAccountButton
+                  : l10n.plansLoginButton,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
@@ -185,7 +191,7 @@ class PlansSuccess extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Lista de planes',
+                l10n.plansPlansListTitle,
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.left,
               ),
@@ -195,10 +201,10 @@ class PlansSuccess extends StatelessWidget {
                       plansList.map((plan) => PlanItem(plan: plan)).toList(),
                 )
               else
-                const Center(child: Text('No hay planes')),
+                Center(child: Text(l10n.plansPlansListEmpty)),
               const SizedBox(height: 20),
               Text(
-                'Lista de planes gratis',
+                l10n.plansPlansFreeTitle,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               if (plansFree.isNotEmpty)
@@ -207,7 +213,7 @@ class PlansSuccess extends StatelessWidget {
                       plansFree.map((plan) => PlanItem(plan: plan)).toList(),
                 )
               else
-                const Text('No hay planes gratis'),
+                Text(l10n.plansPlansFreeEmpty),
             ],
           ),
         ),
@@ -218,7 +224,7 @@ class PlansSuccess extends StatelessWidget {
           context: context,
           builder: (context) => AlertDialog(
             title: Text(
-              'Información del dispositivo',
+              l10n.plansDeviceInfoTitle,
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
@@ -232,25 +238,25 @@ class PlansSuccess extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 DeviceInfoItem(
-                  title: 'Nombre',
+                  title: l10n.plansDeviceInfoName,
                   content: packageInfo['appName'] as String,
                 ),
                 DeviceInfoItem(
-                  title: 'ID',
+                  title: l10n.plansDeviceInfoId,
                   content: packageInfo['packageName'] as String,
                 ),
                 DeviceInfoItem(
-                  title: 'Versión app',
+                  title: l10n.plansDeviceInfoAppVersion,
                   content: packageInfo['version'] as String,
                 ),
                 DeviceInfoItem(
-                  title: 'Modelo',
+                  title: l10n.plansDeviceInfoModel,
                   content: Platform.isAndroid
                       ? androidInfo['model'] as String
                       : iosInfo['model'] as String,
                 ),
                 DeviceInfoItem(
-                  title: 'Versión SO',
+                  title: l10n.plansDeviceInfoOSVersion,
                   content: Platform.isAndroid
                       ? androidInfo['version.release'] as String
                       : iosInfo['systemVersion'] as String,
@@ -266,20 +272,20 @@ class PlansSuccess extends StatelessWidget {
                     DropdownMenuItem(
                       value: 'en',
                       child: Row(
-                        children: const [
-                          Icon(Icons.language),
-                          SizedBox(width: 10),
-                          Text('English'),
+                        children: [
+                          const Icon(Icons.language),
+                          const SizedBox(width: 10),
+                          Text(l10n.plansDeviceInfoEnglishItem),
                         ],
                       ),
                     ),
                     DropdownMenuItem(
                       value: 'es',
                       child: Row(
-                        children: const [
-                          Icon(Icons.language),
-                          SizedBox(width: 10),
-                          Text('Español'),
+                        children: [
+                          const Icon(Icons.language),
+                          const SizedBox(width: 10),
+                          Text(l10n.plansDeviceInfoSpanishItem),
                         ],
                       ),
                     ),
@@ -292,7 +298,7 @@ class PlansSuccess extends StatelessWidget {
           ),
         ),
         label: Text(
-          'Info',
+          l10n.plansDeviceInfoButton,
           style: Theme.of(context)
               .textTheme
               .bodyLarge!
@@ -350,6 +356,8 @@ class PlanItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return InkWell(
       onTap: () => showDialog<void>(
         context: context,
@@ -363,46 +371,58 @@ class PlanItem extends StatelessWidget {
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Nombre: ${plan.name}'),
-              Text('Descripción: ${plan.description}'),
-              Text('Cantidad: ${plan.quantity}'),
-              Text('Cantidad real: ${plan.quantityReal}'),
-              Text('Precio: ${plan.price}'),
-              Text('Duración: ${plan.duration}'),
-              Text('Es seleccionado: ${plan.isSelected}'),
-              Text('Es ilimitado: ${plan.isUnlimited}'),
-              Text('ID de precio plan: ${plan.pricePlanID}'),
-              Text('Es popular: ${plan.isPopular}'),
-              Text('Es recomendado: ${plan.isRecommended}'),
-              Text('Recomprar: ${plan.repurchase}'),
-              Text('Es rollover: ${plan.isRollover}'),
-              Text('Nombre 2: ${plan.name2}'),
-              Text('Nombre 3: ${plan.name3}'),
-              Text('Tiene aplicaciones gratis: ${plan.hasFreeApps}'),
-              Text('Tiene Facebook full: ${plan.hasFacebookFull}'),
-              Text('Tiene Instagram full: ${plan.hasInstagramFull}'),
-              Text('Tiene foto Facebook: ${plan.hasFacebookPhoto}'),
-              Text('Tiene foto Instagram: ${plan.hasInstagramPhoto}'),
-              Text('Descripción Facebook: ${plan.facebookFullDesc}'),
-              Text('Nombre grupo: ${plan.groupName}'),
-              Text('Nombre byte: ${plan.nameByte}'),
-              Text('Nombre segundo: ${plan.nameSecond}'),
-              Text('Nombre SMS: ${plan.nameSms}'),
-              Text('Byte ilimitado: ${plan.isUnlimitedByte}'),
-              Text('Segundo ilimitado: ${plan.isUnlimitedSecond}'),
-              Text('SMS ilimitado: ${plan.isUnlimitedSms}'),
-              Text('Cantidad byte: ${plan.quantityByte}'),
-              Text('Cantidad segundo: ${plan.quantitySecond}'),
-              Text('Cantidad SMS: ${plan.quantitySms}'),
-              Text('IDs paquetes: ${plan.bundleIds}'),
-              Text('Velocidad media: ${plan.mediumSpeed}'),
+              Text('${l10n.plansItemName}: ${plan.name}'),
+              Text('${l10n.plansItemDescription}: ${plan.description}'),
+              Text('${l10n.plansItemQuantity}: ${plan.quantity}'),
+              Text('${l10n.plansItemRealQuantity}: ${plan.quantityReal}'),
+              Text('${l10n.plansItemPrice}: ${plan.price}'),
+              Text('${l10n.plansItemDuration}: ${plan.duration}'),
+              Text('${l10n.plansItemIsSelected}: ${plan.isSelected}'),
+              Text('${l10n.plansItemIsUnlimited}: ${plan.isUnlimited}'),
+              Text('${l10n.plansItemPricePlanId}: ${plan.pricePlanID}'),
+              Text('${l10n.plansItemIsPopular}: ${plan.isPopular}'),
+              Text('${l10n.plansItemIsRecommended}: ${plan.isRecommended}'),
+              Text('${l10n.plansItemRepurchase}: ${plan.repurchase}'),
+              Text('${l10n.plansItemIsRollover}: ${plan.isRollover}'),
+              Text('${l10n.plansItemName2}: ${plan.name2}'),
+              Text('${l10n.plansItemName3}: ${plan.name3}'),
+              Text('${l10n.plansItemHasFreeApps}: ${plan.hasFreeApps}'),
+              Text('${l10n.plansItemHasFacebookFull}: ${plan.hasFacebookFull}'),
               Text(
-                'Descripción velocidad media: ${plan.mediumSpeedDescription}',
+                '${l10n.plansItemHasInstagramFull}: ${plan.hasInstagramFull}',
               ),
-              Text('Tipo de paquete: ${plan.bundleType}'),
-              Text('Brand blanco: ${plan.whiteBrand}'),
-              Text('Aplicaciones gratis: ${plan.freeApps}'),
-              Text('Migraciones: ${plan.migrations}'),
+              Text(
+                '${l10n.plansItemHasFacebookPhoto}: ${plan.hasFacebookPhoto}',
+              ),
+              Text(
+                '${l10n.plansItemHasInstagramPhoto}: ${plan.hasInstagramPhoto}',
+              ),
+              Text(
+                '${l10n.plansItemFacebookDescription}: '
+                '${plan.facebookFullDesc}',
+              ),
+              Text('${l10n.plansItemGroupName}: ${plan.groupName}'),
+              Text('${l10n.plansItemByteName}: ${plan.nameByte}'),
+              Text('${l10n.plansItemNameSecond}: ${plan.nameSecond}'),
+              Text('${l10n.plansItemNameSMS}: ${plan.nameSms}'),
+              Text('${l10n.plansItemByteUnlimited}: ${plan.isUnlimitedByte}'),
+              Text(
+                '${l10n.plansItemSecondUnlimited}: ${plan.isUnlimitedSecond}',
+              ),
+              Text('${l10n.plansItemSMSUnlimited}: ${plan.isUnlimitedSms}'),
+              Text('${l10n.plansItemByteQuantity}: ${plan.quantityByte}'),
+              Text('${l10n.plansItemSecondQuantity}: ${plan.quantitySecond}'),
+              Text('${l10n.plansItemSMSQuantity}: ${plan.quantitySms}'),
+              Text('${l10n.plansItemBundleIds}: ${plan.bundleIds}'),
+              Text('${l10n.plansItemMediumSpeed}: ${plan.mediumSpeed}'),
+              Text(
+                '${l10n.plansItemMediumSpeedDescription}: '
+                '${plan.mediumSpeedDescription}',
+              ),
+              Text('${l10n.plansItemBundleType}: ${plan.bundleType}'),
+              Text('${l10n.plansItemWhiteBrand}: ${plan.whiteBrand}'),
+              Text('${l10n.plansItemFreeApps}: ${plan.freeApps}'),
+              Text('${l10n.plansItemMigrations}: ${plan.migrations}'),
             ],
           ),
           scrollable: true,

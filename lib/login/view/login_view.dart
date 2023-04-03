@@ -1,3 +1,4 @@
+import 'package:cuy_app/l10n/l10n.dart';
 import 'package:cuy_app/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,8 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     context.read<LoginCubit>().initGlobalKey();
 
     return BlocConsumer<LoginCubit, LoginState>(
@@ -17,9 +20,9 @@ class LoginView extends StatelessWidget {
         } else if (state.status.isFailure) {
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Error al iniciar sesión'),
-              duration: Duration(seconds: 3),
+            SnackBar(
+              content: Text(l10n.loginSnackBarError),
+              duration: const Duration(seconds: 3),
             ),
           );
           context.read<LoginCubit>().restartStatus();
@@ -28,7 +31,7 @@ class LoginView extends StatelessWidget {
       builder: (context, state) => Scaffold(
         appBar: AppBar(
           title: Text(
-            'Inicio de sesión',
+            l10n.loginAppBarTitle,
             style:
                 Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22),
           ),
@@ -84,17 +87,19 @@ class UserFormLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
-        decoration: const InputDecoration(
-          labelText: 'Usuario',
+        decoration: InputDecoration(
+          labelText: l10n.loginUserTextField,
         ),
         style: Theme.of(context).textTheme.bodyMedium,
         onChanged: context.read<LoginCubit>().userChanged,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Ingrese su usuario';
+            return l10n.loginUserError;
           }
           return null;
         },
@@ -110,12 +115,13 @@ class PasswordFormLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     final isPasswordVisible = context
         .select<LoginCubit, bool>((cubit) => cubit.state.isPasswordVisible);
+    final l10n = context.l10n;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
         decoration: InputDecoration(
-          labelText: 'Contraseña',
+          labelText: l10n.loginPasswordTextField,
           suffixIcon: IconButton(
             icon: Icon(
               isPasswordVisible ? Icons.visibility : Icons.visibility_off,
@@ -128,7 +134,7 @@ class PasswordFormLogin extends StatelessWidget {
         onChanged: context.read<LoginCubit>().passwordChanged,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Ingrese su contraseña';
+            return l10n.loginPasswordError;
           }
           return null;
         },
@@ -144,6 +150,7 @@ class ButtonLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     final status =
         context.select<LoginCubit, LoginStatus>((cubit) => cubit.state.status);
+    final l10n = context.l10n;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -165,7 +172,7 @@ class ButtonLogin extends StatelessWidget {
                   ),
                 )
               : Text(
-                  'Iniciar sesión',
+                  l10n.loginButton,
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
