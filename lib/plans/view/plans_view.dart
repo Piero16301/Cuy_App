@@ -143,59 +143,55 @@ class PlansSuccess extends StatelessWidget {
       (cubit) => cubit.state.isUserLoggedIn,
     );
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Planes',
-            style:
-                Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Planes',
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () =>
+                isUserLoggedIn ? context.push('/user') : context.push('/login'),
+            child: Text(
+              isUserLoggedIn ? 'Mi cuenta' : 'Iniciar sesión',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => isUserLoggedIn
-                  ? context.push('/user')
-                  : context.push('/login'),
-              child: Text(
-                isUserLoggedIn ? 'Mi cuenta' : 'Iniciar sesión',
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Lista de planes',
+                style: Theme.of(context).textTheme.bodyLarge,
+                textAlign: TextAlign.left,
+              ),
+              if (plansList.isNotEmpty)
+                Column(
+                  children:
+                      plansList.map((plan) => PlanItem(plan: plan)).toList(),
+                )
+              else
+                const Center(child: Text('No hay planes')),
+              const SizedBox(height: 20),
+              Text(
+                'Lista de planes gratis',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-            ),
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Lista de planes',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.left,
-                ),
-                if (plansList.isNotEmpty)
-                  Column(
-                    children:
-                        plansList.map((plan) => PlanItem(plan: plan)).toList(),
-                  )
-                else
-                  const Center(child: Text('No hay planes')),
-                const SizedBox(height: 20),
-                Text(
-                  'Lista de planes gratis',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                if (plansFree.isNotEmpty)
-                  Column(
-                    children:
-                        plansFree.map((plan) => PlanItem(plan: plan)).toList(),
-                  )
-                else
-                  const Text('No hay planes gratis'),
-              ],
-            ),
+              if (plansFree.isNotEmpty)
+                Column(
+                  children:
+                      plansFree.map((plan) => PlanItem(plan: plan)).toList(),
+                )
+              else
+                const Text('No hay planes gratis'),
+            ],
           ),
         ),
       ),

@@ -27,31 +27,150 @@ class UserView extends StatelessWidget {
             ),
           ),
           body: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Center(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Id: ${user.id}'),
-                    const SizedBox(height: 10),
-                    Text('Nombre: ${user.name}'),
-                    const SizedBox(height: 10),
-                    Text('Apellido paterno: ${user.lastNameFather}'),
-                    const SizedBox(height: 10),
-                    Text('Apellido materno: ${user.lastNameMother}'),
-                    const SizedBox(height: 10),
-                    Text('Apellido: ${user.lastName}'),
-                    const SizedBox(height: 10),
-                    const LogOutButton(),
-                  ],
-                ),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  UserAttributeItem(
+                    title: 'Nombre',
+                    content: user.name,
+                  ),
+                  UserAttributeItem(
+                    title: 'Apellido paterno',
+                    content: user.lastNameFather,
+                  ),
+                  UserAttributeItem(
+                    title: 'Apellido materno',
+                    content: user.lastNameMother,
+                  ),
+                  UserAttributeItem(
+                    title: 'Apellido',
+                    content: user.lastName,
+                  ),
+                  UserAttributeItem(
+                    title: 'Nombre completo',
+                    content: user.fullName,
+                  ),
+                  UserAttributeItem(
+                    title: 'Email',
+                    content: user.email,
+                  ),
+                  UserAttributeItem(
+                    title: 'DNI',
+                    content: user.dni,
+                  ),
+                  UserAttributeItem(
+                    title: 'Tipo de identificación de usuario',
+                    content: user.userIdentificationType.toString(),
+                  ),
+                  UserAttributeItem(
+                    title: 'Nombre corporativo',
+                    content: user.businessName,
+                  ),
+                  UserAttributeItem(
+                    title: 'Dirección',
+                    content: user.address,
+                  ),
+                  UserAttributeItem(
+                    title: 'Cumpleaños',
+                    content: user.birthday,
+                  ),
+                  UserAttributeItem(
+                    title: 'Código referido',
+                    content: user.referralCode,
+                  ),
+                  UserAttributeItem(
+                    title: 'URL referida',
+                    content: user.referralUrl,
+                  ),
+                  UserAttributeItem(
+                    title: 'ID zoho',
+                    content: user.zohoId,
+                  ),
+                  UserAttributeItem(
+                    title: 'Foto',
+                    content: user.photo,
+                  ),
+                  UserAttributeItem(
+                    title: 'Tiene foto',
+                    content: user.hasPhoto.toString(),
+                  ),
+                  UserAttributeItem(
+                    title: 'Logeado por teléfono',
+                    content: user.loggedWithPhone,
+                  ),
+                  UserAttributeItem(
+                    title: 'Región',
+                    content: user.region,
+                  ),
+                  UserAttributeItem(
+                    title: 'Es turista',
+                    content: user.isTourist.toString(),
+                  ),
+                  UserAttributeItem(
+                    title: 'Es representante legal',
+                    content: user.isLegalRepresentantOfCompany.toString(),
+                  ),
+                  UserAttributeItem(
+                    title: 'Compañía',
+                    content: user.company.toString(),
+                  ),
+                  const SizedBox(height: 20),
+                  const LogOutButton(),
+                  const SizedBox(height: 20),
+                ],
               ),
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class UserAttributeItem extends StatelessWidget {
+  const UserAttributeItem({
+    required this.title,
+    required this.content,
+    super.key,
+  });
+
+  final String title;
+  final String content;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Expanded(
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontSize: 14,
+                  ),
+            ),
+          ),
+          Text(
+            ':',
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  fontSize: 14,
+                ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              content.isEmpty ? 'No asignado' : content,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: 14,
+                  ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

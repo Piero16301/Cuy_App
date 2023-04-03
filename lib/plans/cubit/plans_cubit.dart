@@ -20,7 +20,6 @@ class PlansCubit extends Cubit<PlansState> {
         sort: 'ASC',
         isActive: true,
       );
-      plans[1] = plans[0];
       final userOAuthToken = _localRepository.getUserOAuthToken();
       emit(
         state.copyWith(
