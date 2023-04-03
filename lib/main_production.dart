@@ -1,10 +1,12 @@
 import 'package:cuy_app/app/app.dart';
 import 'package:cuy_app/app/routes/routes.dart';
 import 'package:cuy_app/bootstrap.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:local_api_remote/local_api_remote.dart';
 import 'package:local_repository/local_repository.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_api_remote/user_api_remote.dart';
 import 'package:user_repository/user_repository.dart';
@@ -14,6 +16,12 @@ void main() async {
 
   // Almacenamiento local de preferencias de usuario
   final preferences = await SharedPreferences.getInstance();
+
+  // Información del dispositivo
+  final deviceInfo = DeviceInfoPlugin();
+  final androidInfo = await deviceInfo.androidInfo;
+  final iosInfo = await deviceInfo.iosInfo;
+  final packageInfo = await PackageInfo.fromPlatform();
 
   // Cliente HTTP
   final httpClient = Dio(
@@ -28,6 +36,9 @@ void main() async {
   // Inicializar Local API
   final localApiRemote = LocalApiRemote(
     preferences: preferences,
+    androidInfo: androidInfo,
+    iosInfo: iosInfo,
+    packageInfo: packageInfo,
   );
   final localRepository = LocalRepository(
     localApiRemote: localApiRemote,

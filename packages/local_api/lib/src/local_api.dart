@@ -2,6 +2,15 @@
 /// Local API Connection
 /// {@endtemplate}
 abstract class ILocalApiRemote {
+  /// Retorna la información del dispositivo Android
+  Map<String, dynamic> getAndroidInfo();
+
+  /// Retorna la información del dispositivo iOS
+  Map<String, dynamic> getIosInfo();
+
+  /// Retorna la información de la aplicación
+  Map<String, dynamic> getPackageInfo();
+
   /// Retorna el token de OAuth del sistema
   String? getSystemOAuthToken();
 

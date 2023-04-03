@@ -21,11 +21,19 @@ class PlansCubit extends Cubit<PlansState> {
         isActive: true,
       );
       final userOAuthToken = _localRepository.getUserOAuthToken();
+
+      final androidInfo = _localRepository.getAndroidInfo();
+      final iosInfo = _localRepository.getIosInfo();
+      final packageInfo = _localRepository.getPackageInfo();
+
       emit(
         state.copyWith(
           status: PlansStatus.success,
           plans: plans,
           isUserLoggedIn: userOAuthToken != null,
+          androidInfo: androidInfo,
+          iosInfo: iosInfo,
+          packageInfo: packageInfo,
         ),
       );
     } catch (e) {

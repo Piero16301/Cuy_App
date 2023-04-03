@@ -18,7 +18,7 @@ class LoginView extends StatelessWidget {
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Usuario o contraseña incorrectos'),
+              content: Text('Error al iniciar sesión'),
               duration: Duration(seconds: 3),
             ),
           );

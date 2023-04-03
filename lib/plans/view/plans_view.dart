@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cuy_app/plans/plans.dart';
 import 'package:flutter/material.dart';
@@ -142,6 +143,15 @@ class PlansSuccess extends StatelessWidget {
     final isUserLoggedIn = context.select<PlansCubit, bool>(
       (cubit) => cubit.state.isUserLoggedIn,
     );
+    final androidInfo = context.select<PlansCubit, Map<String, dynamic>>(
+      (cubit) => cubit.state.androidInfo,
+    );
+    final iosInfo = context.select<PlansCubit, Map<String, dynamic>>(
+      (cubit) => cubit.state.iosInfo,
+    );
+    final packageInfo = context.select<PlansCubit, Map<String, dynamic>>(
+      (cubit) => cubit.state.packageInfo,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -195,6 +205,102 @@ class PlansSuccess extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(Icons.perm_device_info),
+        onPressed: () => showDialog<void>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(
+              'Información del dispositivo',
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
+            icon: const Icon(
+              Icons.perm_device_info,
+              color: Colors.blueAccent,
+            ),
+            contentTextStyle: Theme.of(context).textTheme.bodyMedium,
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DeviceInfoItem(
+                  title: 'Nombre',
+                  content: packageInfo['appName'] as String,
+                ),
+                DeviceInfoItem(
+                  title: 'ID',
+                  content: packageInfo['packageName'] as String,
+                ),
+                DeviceInfoItem(
+                  title: 'Versión app',
+                  content: packageInfo['version'] as String,
+                ),
+                DeviceInfoItem(
+                  title: 'Modelo',
+                  content: Platform.isAndroid
+                      ? androidInfo['model'] as String
+                      : iosInfo['model'] as String,
+                ),
+                DeviceInfoItem(
+                  title: 'Versión SO',
+                  content: Platform.isAndroid
+                      ? androidInfo['version.release'] as String
+                      : iosInfo['systemVersion'] as String,
+                ),
+                DeviceInfoItem(
+                  title: 'Idioma',
+                  content: Platform.localeName,
+                ),
+              ],
+            ),
+          ),
+        ),
+        label: Text(
+          'Info',
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge!
+              .copyWith(color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
+class DeviceInfoItem extends StatelessWidget {
+  const DeviceInfoItem({
+    required this.title,
+    required this.content,
+    super.key,
+  });
+
+  final String title;
+  final String content;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            title,
+            style:
+                Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 14),
+          ),
+        ),
+        Text(
+          ': ',
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 14),
+        ),
+        Expanded(
+          flex: 2,
+          child: Text(
+            content,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+      ],
     );
   }
 }

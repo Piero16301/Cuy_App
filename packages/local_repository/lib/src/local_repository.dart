@@ -11,6 +11,21 @@ class LocalRepository {
 
   final ILocalApiRemote _apiRemote;
 
+  /// Retorna la información del dispositivo Android
+  Map<String, dynamic> getAndroidInfo() {
+    return _apiRemote.getAndroidInfo();
+  }
+
+  /// Retorna la información del dispositivo iOS
+  Map<String, dynamic> getIosInfo() {
+    return _apiRemote.getIosInfo();
+  }
+
+  /// Retorna la información de la aplicación
+  Map<String, dynamic> getPackageInfo() {
+    return _apiRemote.getPackageInfo();
+  }
+
   /// Retorna el token de OAuth del sistema
   String? getSystemOAuthToken() {
     return _apiRemote.getSystemOAuthToken();
