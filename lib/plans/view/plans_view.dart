@@ -159,9 +159,6 @@ class PlansSuccess extends StatelessWidget {
       (cubit) => cubit.state.packageInfo,
     );
     final languageSet = context.read<LanguageCubit>();
-    final locale = context.select<LanguageCubit, Locale>(
-      (cubit) => cubit.state.language,
-    );
     final l10n = context.l10n;
 
     return Scaffold(
@@ -222,80 +219,102 @@ class PlansSuccess extends StatelessWidget {
         icon: const Icon(Icons.perm_device_info),
         onPressed: () => showDialog<void>(
           context: context,
-          builder: (context) => AlertDialog(
-            title: Text(
-              l10n.plansDeviceInfoTitle,
-              style: Theme.of(context).textTheme.bodyLarge,
-              textAlign: TextAlign.center,
-            ),
-            icon: const Icon(
-              Icons.perm_device_info,
-              color: Colors.blueAccent,
-            ),
-            contentTextStyle: Theme.of(context).textTheme.bodyMedium,
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                DeviceInfoItem(
-                  title: l10n.plansDeviceInfoName,
-                  content: packageInfo['appName'] as String,
+          builder: (context) {
+            final locale = context.select<LanguageCubit, Locale>(
+              (cubit) => cubit.state.language,
+            );
+            return StatefulBuilder(
+              builder: (context, setState) => AlertDialog(
+                title: Text(
+                  l10n.plansDeviceInfoTitle,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
                 ),
-                DeviceInfoItem(
-                  title: l10n.plansDeviceInfoId,
-                  content: packageInfo['packageName'] as String,
+                icon: const Icon(
+                  Icons.perm_device_info,
+                  color: Colors.blueAccent,
                 ),
-                DeviceInfoItem(
-                  title: l10n.plansDeviceInfoAppVersion,
-                  content: packageInfo['version'] as String,
-                ),
-                DeviceInfoItem(
-                  title: l10n.plansDeviceInfoModel,
-                  content: Platform.isAndroid
-                      ? androidInfo['model'] as String
-                      : iosInfo['model'] as String,
-                ),
-                DeviceInfoItem(
-                  title: l10n.plansDeviceInfoOSVersion,
-                  content: Platform.isAndroid
-                      ? androidInfo['version.release'] as String
-                      : iosInfo['systemVersion'] as String,
-                ),
-                DropdownButton<String>(
-                  isExpanded: true,
-                  value: locale.languageCode == 'es' ? 'es' : 'en',
-                  // dropdownColor: const Color.fromRGBO(63, 73, 83, 1),
-                  underline: Container(),
-                  icon: const Icon(Icons.keyboard_arrow_down_outlined),
-                  borderRadius: BorderRadius.circular(10),
-                  items: [
-                    DropdownMenuItem(
-                      value: 'en',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.language),
-                          const SizedBox(width: 10),
-                          Text(l10n.plansDeviceInfoEnglishItem),
-                        ],
-                      ),
+                contentTextStyle: Theme.of(context).textTheme.bodyMedium,
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    DeviceInfoItem(
+                      title: l10n.plansDeviceInfoName,
+                      content: packageInfo['appName'] as String,
                     ),
-                    DropdownMenuItem(
-                      value: 'es',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.language),
-                          const SizedBox(width: 10),
-                          Text(l10n.plansDeviceInfoSpanishItem),
-                        ],
-                      ),
+                    DeviceInfoItem(
+                      title: l10n.plansDeviceInfoId,
+                      content: packageInfo['packageName'] as String,
+                    ),
+                    DeviceInfoItem(
+                      title: l10n.plansDeviceInfoAppVersion,
+                      content: packageInfo['version'] as String,
+                    ),
+                    DeviceInfoItem(
+                      title: l10n.plansDeviceInfoModel,
+                      content: Platform.isAndroid
+                          ? androidInfo['model'] as String
+                          : iosInfo['model'] as String,
+                    ),
+                    DeviceInfoItem(
+                      title: l10n.plansDeviceInfoOSVersion,
+                      content: Platform.isAndroid
+                          ? androidInfo['version.release'] as String
+                          : iosInfo['systemVersion'] as String,
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            l10n.plansLanguageTitle,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(fontSize: 14),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                    DropdownButton<String>(
+                      isExpanded: true,
+                      value: locale.languageCode == 'es' ? 'es' : 'en',
+                      // dropdownColor: const Color.fromRGBO(63, 73, 83, 1),
+                      underline: Container(),
+                      icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                      borderRadius: BorderRadius.circular(10),
+                      items: [
+                        DropdownMenuItem(
+                          value: 'en',
+                          child: Row(
+                            children: [
+                              const Icon(Icons.language),
+                              const SizedBox(width: 10),
+                              Text(l10n.plansDeviceInfoEnglishItem),
+                            ],
+                          ),
+                        ),
+                        DropdownMenuItem(
+                          value: 'es',
+                          child: Row(
+                            children: [
+                              const Icon(Icons.language),
+                              const SizedBox(width: 10),
+                              Text(l10n.plansDeviceInfoSpanishItem),
+                            ],
+                          ),
+                        ),
+                      ],
+                      onChanged: (value) =>
+                          languageSet.changeLanguage(Locale(value!)),
                     ),
                   ],
-                  onChanged: (value) =>
-                      languageSet.changeLanguage(Locale(value!)),
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
         label: Text(
           l10n.plansDeviceInfoButton,
