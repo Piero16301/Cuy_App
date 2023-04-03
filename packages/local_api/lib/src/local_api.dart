@@ -11,6 +11,14 @@ abstract class ILocalApiRemote {
   /// Retorna la información de la aplicación
   Map<String, dynamic> getPackageInfo();
 
+  /// Retorna el lenguaje guardado
+  String getLocale();
+
+  /// Guarda el lenguaje
+  Future<void> saveLocale({
+    required String locale,
+  });
+
   /// Retorna el token de OAuth del sistema
   String? getSystemOAuthToken();
 

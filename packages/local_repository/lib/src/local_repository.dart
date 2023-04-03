@@ -26,6 +26,18 @@ class LocalRepository {
     return _apiRemote.getPackageInfo();
   }
 
+  /// Retorna el lenguaje guardado
+  String getLocale() {
+    return _apiRemote.getLocale();
+  }
+
+  /// Guarda el lenguaje
+  Future<void> saveLocale({
+    required String locale,
+  }) async {
+    await _apiRemote.saveLocale(locale: locale);
+  }
+
   /// Retorna el token de OAuth del sistema
   String? getSystemOAuthToken() {
     return _apiRemote.getSystemOAuthToken();

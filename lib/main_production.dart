@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cuy_app/app/app.dart';
 import 'package:cuy_app/app/routes/routes.dart';
 import 'package:cuy_app/bootstrap.dart';
@@ -33,6 +35,16 @@ void main() async {
     ),
   );
 
+  // Inicializar lenguaje
+  var locale = preferences.getString('__locale__');
+  if (locale == null) {
+    await preferences.setString(
+      '__locale__',
+      Platform.localeName.split('_')[0],
+    );
+    locale = Platform.localeName.split('_')[0];
+  }
+
   // Inicializar Local API
   final localApiRemote = LocalApiRemote(
     preferences: preferences,
@@ -61,6 +73,7 @@ void main() async {
       localRepository: localRepository,
       userRepository: userRepository,
       router: router,
+      locale: locale!,
     ),
   );
 }

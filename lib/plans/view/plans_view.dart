@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:cuy_app/app/app.dart';
+import 'package:cuy_app/l10n/l10n.dart';
 import 'package:cuy_app/plans/plans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -152,11 +154,16 @@ class PlansSuccess extends StatelessWidget {
     final packageInfo = context.select<PlansCubit, Map<String, dynamic>>(
       (cubit) => cubit.state.packageInfo,
     );
+    final languageSet = context.read<LanguageCubit>();
+    final locale = context.select<LanguageCubit, Locale>(
+      (cubit) => cubit.state.language,
+    );
+    final l10n = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Planes',
+          l10n.plansAppBarTitle,
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22),
         ),
         actions: [
@@ -248,9 +255,37 @@ class PlansSuccess extends StatelessWidget {
                       ? androidInfo['version.release'] as String
                       : iosInfo['systemVersion'] as String,
                 ),
-                DeviceInfoItem(
-                  title: 'Idioma',
-                  content: Platform.localeName,
+                DropdownButton<String>(
+                  isExpanded: true,
+                  value: locale.languageCode == 'es' ? 'es' : 'en',
+                  // dropdownColor: const Color.fromRGBO(63, 73, 83, 1),
+                  underline: Container(),
+                  icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                  borderRadius: BorderRadius.circular(10),
+                  items: [
+                    DropdownMenuItem(
+                      value: 'en',
+                      child: Row(
+                        children: const [
+                          Icon(Icons.language),
+                          SizedBox(width: 10),
+                          Text('English'),
+                        ],
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: 'es',
+                      child: Row(
+                        children: const [
+                          Icon(Icons.language),
+                          SizedBox(width: 10),
+                          Text('Español'),
+                        ],
+                      ),
+                    ),
+                  ],
+                  onChanged: (value) =>
+                      languageSet.changeLanguage(Locale(value!)),
                 ),
               ],
             ),

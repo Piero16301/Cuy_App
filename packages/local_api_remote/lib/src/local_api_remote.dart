@@ -96,6 +96,16 @@ class LocalApiRemote implements ILocalApiRemote {
   }
 
   @override
+  String getLocale() {
+    return _preferences.getString('__locale__') ?? 'es';
+  }
+
+  @override
+  Future<void> saveLocale({required String locale}) async {
+    await _preferences.setString('__locale__', locale);
+  }
+
+  @override
   String? getSystemOAuthToken() {
     return _preferences.getString('__system_oauth_token__');
   }
