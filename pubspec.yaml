@@ -25,7 +25,7 @@ dependencies:
   local_repository:
     path: packages/local_repository
   package_info_plus: ^3.0.3
-  shared_preferences: ^2.0.18
+  shared_preferences: ^2.1.2
   user_api:
     path: packages/user_api
   user_api_remote:
